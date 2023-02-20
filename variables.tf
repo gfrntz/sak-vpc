@@ -4,6 +4,12 @@ variable "cidr" {
   default     = null
 }
 
+variable "subnet_cidr" {
+  type        = string
+  description = "Subnet cidr"
+  default     = 24
+}
+
 variable "network_delimiter" {
   type        = string
   description = "TBD"

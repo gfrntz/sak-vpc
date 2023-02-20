@@ -1,8 +1,8 @@
 locals {
   zones   = coalescelist(var.availability_zones, data.aws_availability_zones.available.names)
   cidr    = var.cidr != null ? var.cidr : "10.${var.network}.0.0/16"
-  private = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, i)] : [ for i, _ in local.zones : "10.${var.network}.20${i}.0/24" ]
-  public  = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, pow(2, var.network_delimiter) - i)] : [ for i, _ in local.zones:"10.${var.network}.${i}.0/24" ]
+  private = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, i)] : [ for i, _ in local.zones : "10.${var.network}.20${i}.0/${var.subnet_cidr}" ]
+  public  = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, pow(2, var.network_delimiter) - i)] : [ for i, _ in local.zones:"10.${var.network}.${i}.0/${var.subnet_cidr}" ]
 }
 
 data "aws_availability_zones" "available" {}
